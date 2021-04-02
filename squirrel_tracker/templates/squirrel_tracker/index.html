@@ -1,0 +1,23 @@
+{% extends 'squirrel_tracker/base.html' %}
+
+{% load static %}
+
+{% block title %} - All Sightings{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <a href="#">Add a New Squirrel Sighting</a>
+        <ul class="list-group">
+            {% for sighting in sightings %}
+                <li class="list-group-item">
+
+                    <h5>{{ sighting.unique_squirrel_id }}</h5>
+                    <p>
+                        {{ sighting.date }}
+                    </p>
+                    <a href="#">Details</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
