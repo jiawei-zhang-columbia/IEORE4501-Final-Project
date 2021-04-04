@@ -11,6 +11,9 @@ urlpatterns = [
     path('update_latitude/<unique_squirrel_id>', views.update_latitude, name='update_latitude'),
     path('update_longitude/<unique_squirrel_id>', views.update_longitude, name='update_longitude'),
     path('update_shift/<unique_squirrel_id>', views.update_shift, name='update_shift'),
-    path('update_date/<unique_squirrel_id>', views.update_date, name='update_date')
+    path('update_date/<unique_squirrel_id>', views.update_date, name='update_date'),
+    path('update_age/<unique_squirrel_id>', views.update_age, name='update_age'),
+    path('add/', views.add_sighting, name='add'),
+    path('add_sighting_post/', views.add_sighting_post, name='add_sighting_post')
 ]
 

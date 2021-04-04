@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -10,6 +11,8 @@ from .forms import LatitudeForm
 from .forms import LongitudeForm
 from .forms import ShiftForm
 from .forms import DateForm
+from .forms import AgeForm
+from .forms import AddSightingForm
 
 
 def index(request):
@@ -111,4 +114,56 @@ def update_date(request, unique_squirrel_id):
         else:
             return JsonResponse({'errors': form.errors}, status=400)
 
+    return JsonResponse({}, status=405)
+
+
+def update_age(request, unique_squirrel_id):
+    if request.method == 'POST':
+        form = AgeForm(request.POST)
+        if form.is_valid():
+            updated_age = form.cleaned_data['updated_age']
+            sighting = Sighting.objects.get(unique_squirrel_id=unique_squirrel_id)
+            sighting.age = updated_age
+            sighting.save()
+            return redirect('squirrel_tracker:detail', unique_squirrel_id=unique_squirrel_id)
+        else:
+            return JsonResponse({'errors': form.errors}, status=400)
+
+    return JsonResponse({}, status=405)
+
+
+def add_sighting(request):
+    return render(request, 'squirrel_tracker/add.html', {})
+
+
+def add_sighting_post(request):
+    if request.method == 'POST':
+        form = AddSightingForm(request.POST)
+        if form.is_valid():
+            latitude = form.cleaned_data['latitude']
+            longitude = form.cleaned_data['longitude']
+            unique_squirrel_id = form.cleaned_data['unique_squirrel_id']
+            shift = form.cleaned_data['shift']
+            date = form.cleaned_data['date']
+            age = form.cleaned_data['age']
+
+            pattern = re.compile(r'^[0-9]+[A-Z]-[AP]M-[0-9]{4}-[0-9]{2}$')
+
+            date = str(date)
+
+            # latitude = str(latitude)
+            # longitude = str(longitude)
+
+            # result = unique_squirrel_id + '\n' + \
+            #          latitude + '\n' + \
+            #          longitude + '\n' + \
+            #          shift + '\n' + \
+            #          date + '\n' + \
+            #          age
+            # return HttpResponse(result)
+
+            return render(request, 'squirrel_tracker/add.html', {'form': form})
+        else:
+            # return JsonResponse({'errors': form.errors}, status=400)
+            return render(request, 'squirrel_tracker/add.html', {'form': form})
     return JsonResponse({}, status=405)

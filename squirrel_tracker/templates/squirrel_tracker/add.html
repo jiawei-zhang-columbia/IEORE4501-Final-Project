@@ -1,0 +1,47 @@
+{% extends 'squirrel_tracker/base.html' %}
+
+{% load static %}
+
+{% block title %} - Add Sighting{% endblock %}
+
+{% block main %}
+    <div class="container">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <h1>Add a New Squirrel Sighting here!</h1>
+        <h3>Please input what you saw here</h3>
+        <form action="{% url 'squirrel_tracker:add_sighting_post' %}" method="post">
+            {% csrf_token %}
+            <label>Latitude</label>
+            <input type="number" step="any" name="latitude" aria-label="Latitude">
+            <label>Longitude</label>
+            <input type="number" step="any" name="longitude" aria-label="Longitude">
+            <label>Unique Squirrel ID</label>
+            <input type="text" name="unique_squirrel_id" aria-label="Unique Squirrel ID">
+            <label>Shift</label>
+            <select name="shift" aria-label="Shift">
+                <optgroup label="Shift">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </optgroup>
+            </select>
+            <label>Date</label>
+            <input type="number" step="1" name="date" aria-label="Date">
+            <label>Age</label>
+            <select name="age" aria-label="Age">
+                <optgroup label="Age">
+                    <option value="Juvenile">Juvenile</option>
+                    <option value="Adult">Adult</option>
+                </optgroup>
+            </select>
+            <button class="btn btn-outline-secondary" type="submit">Add</button>
+        </form>
+    </div>
+{% endblock %}

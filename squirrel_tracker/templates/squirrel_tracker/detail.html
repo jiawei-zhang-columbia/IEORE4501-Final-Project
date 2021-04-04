@@ -80,5 +80,17 @@
             <input type="hidden" name="unique_squirrel_id" value="{{ sighting.unique_squirrel_id }}">
             <button class="btn btn-outline-secondary" type="submit">Update</button>
         </form>
+        <h5>Update age</h5>
+        <form action="{% url 'squirrel_tracker:update_age' sighting.unique_squirrel_id %}" method="post">
+            {% csrf_token %}
+            <select name="updated_age" aria-label="Update Age">
+                <optgroup label="Update Age">
+                    <option value="Juvenile">Juvenile</option>
+                    <option value="Adult">Adult</option>
+                </optgroup>
+            </select>
+            <input type="hidden" name="unique_squirrel_id" value="{{ sighting.unique_squirrel_id }}">
+            <button class="btn btn-outline-secondary" type="submit">Update</button>
+        </form>
     </div>
 {% endblock %}
