@@ -8,11 +8,12 @@ from django.urls import reverse
 from django.contrib import messages
 
 from .models import Sighting
-from .forms import LatitudeForm
-from .forms import LongitudeForm
-from .forms import ShiftForm
-from .forms import DateForm
-from .forms import AgeForm
+# from .forms import LatitudeForm
+# from .forms import LongitudeForm
+# from .forms import ShiftForm
+# from .forms import DateForm
+# from .forms import AgeForm
+from .forms import UpdateForm
 from .forms import AddSightingForm
 
 
@@ -38,100 +39,55 @@ def index(request):
 
 
 def detail(request, unique_squirrel_id):
-    sighting = get_object_or_404(Sighting, unique_squirrel_id=unique_squirrel_id)
-    context = {
-        'sighting': sighting
-    }
+    if request.method == 'POST':
+        form = UpdateForm(request.POST)
+        sighting = Sighting.objects.get(unique_squirrel_id=unique_squirrel_id)
+        if form.is_valid():
+            latitude = form.cleaned_data['latitude']
+            longitude = form.cleaned_data['longitude']
+            shift = form.cleaned_data['shift']
+            date = form.cleaned_data['date']
+            age = form.cleaned_data['age']
+
+            sighting.latitude = latitude
+            sighting.longitude = longitude
+            sighting.shift = shift
+            sighting.date = date
+            sighting.age = age
+
+            sighting.save()
+            messages.success(request, 'The sighting was successfully updated!')
+
+        context = {
+            'sighting': sighting,
+            'form': form
+        }
+
+    else:
+        sighting = get_object_or_404(Sighting, unique_squirrel_id=unique_squirrel_id)
+        latitude = sighting.latitude
+        longitude = sighting.longitude
+        shift = sighting.shift
+        print(shift)
+        date = sighting.date
+        age = sighting.age
+        print(age)
+        form = UpdateForm(
+            initial={
+                'latitude': latitude,
+                'longitude': longitude,
+                'shift': shift,
+                'date': date,
+                'age': age
+            }
+        )
+        print(str(form))
+        context = {
+            'sighting': sighting,
+            'form': form
+        }
     return render(request, 'squirrel_tracker/detail.html', context)
 
-
-def update_latitude(request, unique_squirrel_id):
-    if request.method == 'POST':
-        form = LatitudeForm(request.POST)
-        if form.is_valid():
-            updated_latitude = form.cleaned_data['updated_latitude']
-            sighting = Sighting.objects.get(unique_squirrel_id=unique_squirrel_id)
-            sighting.latitude = updated_latitude
-            sighting.save()
-            sighting = get_object_or_404(Sighting, unique_squirrel_id=unique_squirrel_id)
-            context = {
-                'sighting': sighting
-            }
-            return redirect('squirrel_tracker:detail', unique_squirrel_id=unique_squirrel_id)
-            # return render(request, 'squirrel_tracker/detail.html', context)
-        else:
-            return JsonResponse({'errors': form.errors}, status=400)
-
-    return JsonResponse({}, status=405)
-
-
-def update_longitude(request, unique_squirrel_id):
-    if request.method == 'POST':
-        form = LongitudeForm(request.POST)
-        if form.is_valid():
-            updated_longitude = form.cleaned_data['updated_longitude']
-            sighting = Sighting.objects.get(unique_squirrel_id=unique_squirrel_id)
-            sighting.longitude = updated_longitude
-            sighting.save()
-            sighting = get_object_or_404(Sighting, unique_squirrel_id=unique_squirrel_id)
-            context = {
-                'sighting': sighting
-            }
-            return redirect('squirrel_tracker:detail', unique_squirrel_id=unique_squirrel_id)
-        else:
-            return JsonResponse({'errors': form.errors}, status=400)
-
-    return JsonResponse({}, status=405)
-
-
-def update_shift(request, unique_squirrel_id):
-    if request.method == 'POST':
-        form = ShiftForm(request.POST)
-        if form.is_valid():
-            updated_shift = form.cleaned_data['updated_shift']
-            sighting = Sighting.objects.get(unique_squirrel_id=unique_squirrel_id)
-            sighting.shift = updated_shift
-            sighting.save()
-            sighting = get_object_or_404(Sighting, unique_squirrel_id=unique_squirrel_id)
-            context = {
-                'sighting': sighting
-            }
-            return redirect('squirrel_tracker:detail', unique_squirrel_id=unique_squirrel_id)
-        else:
-            return JsonResponse({'errors': form.errors}, status=400)
-
-    return JsonResponse({}, status=405)
-
-
-def update_date(request, unique_squirrel_id):
-    if request.method == 'POST':
-        form = DateForm(request.POST)
-        if form.is_valid():
-            updated_date = form.cleaned_data['updated_date']
-            updated_date = str(updated_date)
-            sighting = Sighting.objects.get(unique_squirrel_id=unique_squirrel_id)
-            sighting.date = updated_date
-            sighting.save()
-            return redirect('squirrel_tracker:detail', unique_squirrel_id=unique_squirrel_id)
-        else:
-            return JsonResponse({'errors': form.errors}, status=400)
-
-    return JsonResponse({}, status=405)
-
-
-def update_age(request, unique_squirrel_id):
-    if request.method == 'POST':
-        form = AgeForm(request.POST)
-        if form.is_valid():
-            updated_age = form.cleaned_data['updated_age']
-            sighting = Sighting.objects.get(unique_squirrel_id=unique_squirrel_id)
-            sighting.age = updated_age
-            sighting.save()
-            return redirect('squirrel_tracker:detail', unique_squirrel_id=unique_squirrel_id)
-        else:
-            return JsonResponse({'errors': form.errors}, status=400)
-
-    return JsonResponse({}, status=405)
 
 
 def add_sighting(request):

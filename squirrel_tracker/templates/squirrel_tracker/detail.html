@@ -6,6 +6,24 @@
 
 {% block main %}
     <div class="container">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        <strong>{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
         <table class="table">
             <thead>
                  <tr>
@@ -41,55 +59,14 @@
             </tbody>
         </table>
         <br>
-        <br>
-        <h3>Update sighting</h3>
-        <br>
-        <h5>Update latitude</h5>
-        <form action="{% url 'squirrel_tracker:update_latitude' sighting.unique_squirrel_id %}" method="post">
+        <h3>Update sighting here!</h3>
+        <form action="{% url 'squirrel_tracker:detail' sighting.unique_squirrel_id %}" method="post">
             {% csrf_token %}
-            <input type="number" step="any" name="updated_latitude" aria-label="Update Latitude">
-            <input type="hidden" name="unique_squirrel_id" value="{{ sighting.unique_squirrel_id }}">
-            <button class="btn btn-outline-secondary" type="submit">Update</button>
-        </form>
-        <br>
-        <h5>Update longitude</h5>
-        <form action="{% url 'squirrel_tracker:update_longitude' sighting.unique_squirrel_id %}" method="post">
-            {% csrf_token %}
-            <input type="number" step="any" name="updated_longitude" aria-label="Update Longitude">
-            <input type="hidden" name="unique_squirrel_id" value="{{ sighting.unique_squirrel_id }}">
-            <button class="btn btn-outline-secondary" type="submit">Update</button>
-        </form>
-        <br>
-        <h5>Update shift</h5>
-        <form action="{% url 'squirrel_tracker:update_shift' sighting.unique_squirrel_id %}" method="post">
-            {% csrf_token %}
-            <select name="updated_shift" aria-label="Update Shift">
-                <optgroup label="Update Shift">
-                    <option value="AM">AM</option>
-                    <option value="PM">PM</option>
-                </optgroup>
-            </select>
-            <input type="hidden" name="unique_squirrel_id" value="{{ sighting.unique_squirrel_id }}">
-            <button class="btn btn-outline-secondary" type="submit">Update</button>
-        </form>
-        <br>
-        <h5>Update date</h5>
-        <form action="{% url 'squirrel_tracker:update_date' sighting.unique_squirrel_id %}" method="post">
-            {% csrf_token %}
-            <input type="number" step="1" name="updated_date" aria-label="Update date">
-            <input type="hidden" name="unique_squirrel_id" value="{{ sighting.unique_squirrel_id }}">
-            <button class="btn btn-outline-secondary" type="submit">Update</button>
-        </form>
-        <h5>Update age</h5>
-        <form action="{% url 'squirrel_tracker:update_age' sighting.unique_squirrel_id %}" method="post">
-            {% csrf_token %}
-            <select name="updated_age" aria-label="Update Age">
-                <optgroup label="Update Age">
-                    <option value="Juvenile">Juvenile</option>
-                    <option value="Adult">Adult</option>
-                </optgroup>
-            </select>
-            <input type="hidden" name="unique_squirrel_id" value="{{ sighting.unique_squirrel_id }}">
+            {% for field in form %}
+                {{ field.label }}
+                {{ field }}
+                <br>
+            {% endfor %}
             <button class="btn btn-outline-secondary" type="submit">Update</button>
         </form>
     </div>

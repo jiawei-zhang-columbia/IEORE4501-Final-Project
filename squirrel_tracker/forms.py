@@ -4,31 +4,31 @@ from django.core.exceptions import ValidationError
 from squirrel_tracker.models import Sighting
 
 
-class LatitudeForm(forms.Form):
-    updated_latitude = forms.FloatField()
-
-
-class LongitudeForm(forms.Form):
-    updated_longitude = forms.FloatField()
-
-
-class ShiftForm(forms.Form):
-    updated_shift = forms.CharField(
-        max_length=10
-    )
-
-
-class DateForm(forms.Form):
-    updated_date = forms.CharField(
-        max_length=10
-    )
-
-
-class AgeForm(forms.Form):
-    updated_age = forms.CharField(
-        max_length=10
-    )
-
+# class LatitudeForm(forms.Form):
+#     updated_latitude = forms.FloatField()
+#
+#
+# class LongitudeForm(forms.Form):
+#     updated_longitude = forms.FloatField()
+#
+#
+# class ShiftForm(forms.Form):
+#     updated_shift = forms.CharField(
+#         max_length=10
+#     )
+#
+#
+# class DateForm(forms.Form):
+#     updated_date = forms.CharField(
+#         max_length=10
+#     )
+#
+#
+# class AgeForm(forms.Form):
+#     updated_age = forms.CharField(
+#         max_length=10
+#     )
+#
 
 # class AddSightingForm(forms.Form):
 #     latitude = forms.FloatField(
@@ -64,6 +64,17 @@ class AgeForm(forms.Form):
 #         error_messages={'required': 'Age Field is required'}
 #     )
 
+class UpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Sighting
+        fields = [
+            'latitude',
+            'longitude',
+            'shift',
+            'date',
+            'age'
+        ]
 
 class AddSightingForm(forms.ModelForm):
     class Meta:

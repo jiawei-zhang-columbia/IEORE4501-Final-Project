@@ -31,8 +31,8 @@ class Sighting(models.Model):
         help_text=_('Hectare')
     )
 
-    AM = 'am'
-    PM = 'pm'
+    AM = 'AM'
+    PM = 'PM'
     SHIFT_CHOICES = [
         (AM, 'AM'),
         (PM, 'PM')
@@ -52,8 +52,8 @@ class Sighting(models.Model):
         help_text=_('Hectare Squirrel Number')
     )
 
-    ADULT = 'adult'
-    JUVENILE = 'juvenile'
+    ADULT = 'Adult'
+    JUVENILE = 'Juvenile'
     QUESTION_MARK = '?'
 
     AGE_CHOICES = [
@@ -82,8 +82,8 @@ class Sighting(models.Model):
         blank=True
     )
 
-    GROUND_PLANE = 'ground plane'
-    ABOVE_GROUND = 'above ground'
+    GROUND_PLANE = 'Ground Plane'
+    ABOVE_GROUND = 'Above Ground'
 
     LOCATION_CHOICES = [
         (GROUND_PLANE, _('ground plane')),
