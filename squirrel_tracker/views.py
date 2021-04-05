@@ -8,11 +8,6 @@ from django.urls import reverse
 from django.contrib import messages
 
 from .models import Sighting
-# from .forms import LatitudeForm
-# from .forms import LongitudeForm
-# from .forms import ShiftForm
-# from .forms import DateForm
-# from .forms import AgeForm
 from .forms import UpdateForm
 from .forms import AddSightingForm
 
@@ -21,11 +16,6 @@ def index(request):
 
     def parse_date(date):
         date = str(date)
-        # month = date[:2]
-        # day = date[2:4]
-        # year = date[4:]
-        #
-        # date = month + '-' + day + '-' + year
 
         return date
 
@@ -68,10 +58,8 @@ def detail(request, unique_squirrel_id):
         latitude = sighting.latitude
         longitude = sighting.longitude
         shift = sighting.shift
-        print(shift)
         date = sighting.date
         age = sighting.age
-        print(age)
         form = UpdateForm(
             initial={
                 'latitude': latitude,
@@ -81,7 +69,6 @@ def detail(request, unique_squirrel_id):
                 'age': age
             }
         )
-        print(str(form))
         context = {
             'sighting': sighting,
             'form': form
@@ -151,6 +138,5 @@ def add_sighting(request):
 
     else:
         form = AddSightingForm()
-        # return HttpResponse(str(form))
 
     return render(request, 'squirrel_tracker/add.html', {'form': form})

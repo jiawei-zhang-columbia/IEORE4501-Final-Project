@@ -6,7 +6,7 @@
 
 {% block main %}
     <div class="container">
-        <a href="#">Add a New Squirrel Sighting</a>
+        <a href="add/">Add a New Squirrel Sighting</a>
         <ul class="list-group">
             {% for sighting in sightings %}
                 <li class="list-group-item">
@@ -15,7 +15,7 @@
                     <p>
                         {{ sighting.date }}
                     </p>
-                    <a href="#">Details</a>
+                    <a href="{{ sighting.unique_squirrel_id }}/">Details</a>
                 </li>
             {% endfor %}
         </ul>
