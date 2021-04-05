@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 import pandas as pd
 from squirrel_tracker.models import Sighting
-
+from django.db.utils import IntegrityError
 
 class Command(BaseCommand):
 
@@ -13,6 +13,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         path = options['path_to_csv']
         df = pd.read_csv(path)
+        df = df.drop_duplicates('Unique Squirrel ID')
         df['Age'] = df['Age'].fillna('')
         df['Primary Fur Color'] = df['Primary Fur Color'].fillna('')
         df['Highlight Fur Color'] = df['Highlight Fur Color'].fillna('')
@@ -20,6 +21,7 @@ class Command(BaseCommand):
         df['Specific Location'] = df['Specific Location'].fillna('')
         df['Other Activities'] = df['Other Activities'].fillna('')
         df['Date'] = df['Date'].astype(str)
+        df['Date'] = pd.to_datetime(df['Date'], format='%m%d%Y')
         df.rename(columns={'X': 'Longitude', 'Y': 'Latitude'}, inplace=True)
         columns = [
             'Longitude',
@@ -80,4 +82,7 @@ class Command(BaseCommand):
                 indifferent=row['Indifferent'],
                 runs_from=row['Runs from']
             )
-            s.save()
+            try:
+                s.save()
+            except IntegrityError:
+                pass

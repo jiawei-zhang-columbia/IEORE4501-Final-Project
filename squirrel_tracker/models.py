@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext as _
+from django.core.validators import RegexValidator
 
 
 class Sighting(models.Model):
@@ -15,6 +16,14 @@ class Sighting(models.Model):
     unique_squirrel_id = models.CharField(
         max_length=50,
         help_text=_('Unique Squirrel ID'),
+        unique=True,
+        validators=[
+            RegexValidator(
+                '^[0-9]+[A-Z]-[AP]M-[0-9]{4}-[0-9]{2}$',
+                message='Incorrect format of Unique Squirrel ID',
+                code='invalid_id'
+            )
+        ]
     )
 
     hectare = models.CharField(
@@ -22,13 +31,19 @@ class Sighting(models.Model):
         help_text=_('Hectare')
     )
 
+    AM = 'am'
+    PM = 'pm'
+    SHIFT_CHOICES = [
+        (AM, 'AM'),
+        (PM, 'PM')
+    ]
     shift = models.CharField(
         max_length=10,
-        help_text=_('Shift')
+        help_text=_('Shift'),
+        choices=SHIFT_CHOICES
     )
 
-    date = models.CharField(
-        max_length=10,
+    date = models.DateField(
         help_text=_('Date')
     )
 
@@ -51,18 +66,20 @@ class Sighting(models.Model):
         max_length=50,
         help_text='Age',
         choices=AGE_CHOICES,
+        blank=True
     )
 
     primary_fur_color = models.CharField(
         max_length=100,
         help_text='Primary Fur Color',
-        default=''
+        blank=True
     )
 
     highlight_fur_color = models.CharField(
         max_length=100,
         help_text='Highlight Fur Color',
-        default=''
+        default='',
+        blank=True
     )
 
     GROUND_PLANE = 'ground plane'
@@ -77,12 +94,14 @@ class Sighting(models.Model):
         max_length=50,
         help_text='Location',
         choices=LOCATION_CHOICES,
+        blank=True
     )
 
     specific_location = models.CharField(
         max_length=100,
         help_text='Specific Location',
-        default=''
+        default='',
+        blank=True
     )
 
     running = models.BooleanField(
@@ -108,7 +127,7 @@ class Sighting(models.Model):
     other_activities = models.CharField(
         max_length=200,
         help_text='Other Activities',
-        default=''
+        blank=True
     )
 
     kuks = models.BooleanField(

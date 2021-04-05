@@ -6,6 +6,15 @@
 
 {% block main %}
     <div class="container">
+        {% if messages %}
+            <div class="messages" >
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        <strong>{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% if form.errors %}
             {% for field in form %}
                 {% for error in field.errors %}
@@ -17,39 +26,15 @@
         {% endif %}
         <h1>Add a New Squirrel Sighting here!</h1>
         <h3>Please input what you saw here</h3>
-<!--        <form action="{% url 'squirrel_tracker:add_sighting_post' %}" method="post">-->
-<!--            {% csrf_token %}-->
-<!--            <label>Latitude</label>-->
-<!--            <input type="number" step="any" name="latitude" aria-label="Latitude">-->
-<!--            <br>-->
-<!--            <label>Longitude</label>-->
-<!--            <input type="number" step="any" name="longitude" aria-label="Longitude">-->
-<!--            <br>-->
-<!--            <label>Unique Squirrel ID</label>-->
-<!--            <input type="text" name="unique_squirrel_id" aria-label="Unique Squirrel ID">-->
-<!--            <br>-->
-<!--            <label>Shift</label>-->
-<!--            <select name="shift" aria-label="Shift">-->
-<!--                <optgroup label="Shift">-->
-<!--                    <option value="AM">AM</option>-->
-<!--                    <option value="PM">PM</option>-->
-<!--                </optgroup>-->
-<!--            </select>-->
-<!--            <br>-->
-<!--            <label>Date</label>-->
-<!--            <input type="number" step="1" name="date" aria-label="Date">-->
-<!--            <br>-->
-<!--            <label>Age</label>-->
-<!--            <select name="age" aria-label="Age">-->
-<!--                <optgroup label="Age">-->
-<!--                    <option value="juvenile">Juvenile</option>-->
-<!--                    <option value="adult">Adult</option>-->
-<!--                </optgroup>-->
-<!--            </select>-->
-<!--            <br>-->
-
-<!--            <button class="btn btn-outline-secondary" type="submit">Add</button>-->
-<!--        </form>-->
-
+        <form action="{% url 'squirrel_tracker:add' %}" method="post">
+            {% csrf_token %}
+<!--            {{ form }}-->
+            {% for field in form %}
+                {{ field.label }}
+                {{ field }}
+                <br>
+            {% endfor %}
+            <button class="btn btn-outline-secondary" type="submit">Add</button>
+        </form>
     </div>
 {% endblock %}

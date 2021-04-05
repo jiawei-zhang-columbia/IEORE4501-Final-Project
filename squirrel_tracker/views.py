@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.contrib import messages
 
 from .models import Sighting
 from .forms import LatitudeForm
@@ -18,11 +19,12 @@ from .forms import AddSightingForm
 def index(request):
 
     def parse_date(date):
-        month = date[:2]
-        day = date[2:4]
-        year = date[4:]
-
-        date = month + '-' + day + '-' + year
+        date = str(date)
+        # month = date[:2]
+        # day = date[2:4]
+        # year = date[4:]
+        #
+        # date = month + '-' + day + '-' + year
 
         return date
 
@@ -133,10 +135,6 @@ def update_age(request, unique_squirrel_id):
 
 
 def add_sighting(request):
-    return render(request, 'squirrel_tracker/add.html', {})
-
-
-def add_sighting_post(request):
     if request.method == 'POST':
         form = AddSightingForm(request.POST)
         if form.is_valid():
@@ -146,24 +144,57 @@ def add_sighting_post(request):
             shift = form.cleaned_data['shift']
             date = form.cleaned_data['date']
             age = form.cleaned_data['age']
+            primary_fur_color = form.cleaned_data['primary_fur_color']
+            location = form.cleaned_data['location']
+            specific_location = form.cleaned_data['specific_location']
+            running = form.cleaned_data['running']
+            chasing = form.cleaned_data['chasing']
+            eating = form.cleaned_data['eating']
+            foraging = form.cleaned_data['foraging']
+            other_activities = form.cleaned_data['other_activities']
+            kuks = form.cleaned_data['kuks']
+            quaas = form.cleaned_data['quaas']
+            moans = form.cleaned_data['moans']
+            tail_flags = form.cleaned_data['tail_flags']
+            tail_twitches = form.cleaned_data['tail_twitches']
+            approaches = form.cleaned_data['approaches']
+            indifferent = form.cleaned_data['indifferent']
+            runs_from = form.cleaned_data['runs_from']
+            climbing = form.cleaned_data['climbing']
 
-            pattern = re.compile(r'^[0-9]+[A-Z]-[AP]M-[0-9]{4}-[0-9]{2}$')
+            sighting = Sighting()
+            sighting.unique_squirrel_id = unique_squirrel_id
+            sighting.latitude = latitude
+            sighting.longitude = longitude
+            sighting.shift = shift
+            sighting.date = date
+            sighting.age = age
+            sighting.primary_fur_color = primary_fur_color
+            sighting.location = location
+            sighting.specific_location = specific_location
+            sighting.running = running
+            sighting.chasing = chasing
+            sighting.eating = eating
+            sighting.foraging = foraging
+            sighting.other_activities = other_activities
+            sighting.kuks = kuks
+            sighting.quaas = quaas
+            sighting.moans = moans
+            sighting.tail_flags = tail_flags
+            sighting.tail_twitches = tail_twitches
+            sighting.approaches = approaches
+            sighting.indifferent = indifferent
+            sighting.runs_from = runs_from
+            sighting.climbing = climbing
 
-            date = str(date)
+            sighting.save()
 
-            # latitude = str(latitude)
-            # longitude = str(longitude)
+            form = AddSightingForm()
 
-            # result = unique_squirrel_id + '\n' + \
-            #          latitude + '\n' + \
-            #          longitude + '\n' + \
-            #          shift + '\n' + \
-            #          date + '\n' + \
-            #          age
-            # return HttpResponse(result)
+            messages.success(request, 'A new sighting was successfully added!')
 
-            return render(request, 'squirrel_tracker/add.html', {'form': form})
-        else:
-            # return JsonResponse({'errors': form.errors}, status=400)
-            return render(request, 'squirrel_tracker/add.html', {'form': form})
-    return JsonResponse({}, status=405)
+    else:
+        form = AddSightingForm()
+        # return HttpResponse(str(form))
+
+    return render(request, 'squirrel_tracker/add.html', {'form': form})
