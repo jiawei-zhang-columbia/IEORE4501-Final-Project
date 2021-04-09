@@ -147,3 +147,23 @@ def show_map(request):
         'sightings':sightings
     }
     return render(request,'squirrel_tracker/map.html',context)
+
+
+def stats(request):
+    num_of_sightings = Sighting.objects.all().count()
+    num_of_squirrel = Sighting.objects.values("unique_squirrel_id").distinct().count()
+    juvenile_age = Sighting.objects.filter(age='Juvenile').count()
+    gray_fur = Sighting.objects.filter(primary_fur_color='Gray').count()
+    ground_plane_location = Sighting.objects.filter(
+        location='Ground Plane').count()
+    running = Sighting.objects.filter(running='True').count()
+    context = {
+        'num_of_sightings': num_of_sightings,
+        'num_of_squirrel': num_of_squirrel,
+        'juvenile_age': juvenile_age,
+        'gray_fur': gray_fur,
+        'ground_plane_location': ground_plane_location,
+        'running': running,
+    }
+
+    return render(request,'squirrel_tracker/stats.html',context)
