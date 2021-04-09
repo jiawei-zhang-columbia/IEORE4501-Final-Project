@@ -140,3 +140,10 @@ def add_sighting(request):
         form = AddSightingForm()
 
     return render(request, 'squirrel_tracker/add.html', {'form': form})
+
+def show_map(request):
+    sightings = Sighting.objects.all()[:100]
+    context = {
+        'sightings':sightings
+    }
+    return render(request,'squirrel_tracker/map.html',context)
