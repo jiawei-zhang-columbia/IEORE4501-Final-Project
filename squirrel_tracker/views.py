@@ -141,13 +141,13 @@ def add_sighting(request):
 
     return render(request, 'squirrel_tracker/add.html', {'form': form})
 
+
 def show_map(request):
     sightings = Sighting.objects.all()[:100]
     context = {
         'sightings':sightings
     }
     return render(request,'squirrel_tracker/map.html',context)
-
 
 def stats(request):
     num_of_sightings = Sighting.objects.all().count()
