@@ -1,0 +1,76 @@
+
+<!doctype html>
+<html>
+
+<head>
+	<meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	</style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<h1 class="text-center mt-5">Sighting Stats</h1>
+{% block content %}
+<form method='GET'>
+
+	<style>
+		table,
+		table tr th,
+		table tr td {
+			border: 2px solid white;
+		}
+
+		table {
+			width: 900px;
+			min-height: 50px;
+			line-height: 50px;
+			text-align: center;
+			border-collapse: collapse;
+		}
+	</style>
+
+	<table align='center' class="mt-1 table table-striped">
+		<tr class="bg-info">
+			<th> Sightings</th>
+            <th> Unique Squirrels</th>
+		</tr>
+		<tr class="bg-warning">
+			<td>{{ num_of_sightings }}</td>
+            <td>{{ num_of_squirrel }}</td>
+
+		</tr>
+		</center>
+	</table>
+    
+    <table align='center' class="mt-1 table table-striped">
+		<tr class="bg-info">
+			<th> Juvenile Age Squirrels</th>
+			<th> Squirrels with Gray Fur</th>
+			<th> Squirrels on the Ground</th>
+			<th> Squirrels Running</th>
+		</tr>
+		<tr class="bg-warning">
+			<td>{{ juvenile_age }}</td>
+			<td>{{ gray_fur }}</td>
+			<td>{{ ground_plane_location }}</td>
+			<td>{{ running }}</td>
+		</tr>
+		</center>
+	</table>
+</form>
+<a href='/sightings/' class=''>
+	<center><button type='button' class='btn btn-primary button'>Back to the list page</button></center>
+</a>
+{% endblock %}
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"
+	integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+</html>
