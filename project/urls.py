@@ -21,6 +21,6 @@ import squirrel_tracker.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('sightings/', include('squirrel_tracker.urls'))
+    path('sightings/', include('squirrel_tracker.urls')),
     path('map/',views.show_map,name='show_map')
 ]
