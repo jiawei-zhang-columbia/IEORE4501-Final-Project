@@ -1,10 +1,5 @@
-import re
 from django.shortcuts import render
-from django.http import JsonResponse
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
-from django.urls import reverse
 from django.contrib import messages
 
 from .models import Sighting
@@ -26,6 +21,7 @@ def index(request):
         'sightings': sightings
     }
     return render(request, 'squirrel_tracker/index.html', context)
+
 
 def new_index(request):
 
@@ -89,7 +85,6 @@ def detail(request, unique_squirrel_id):
             'form': form
         }
     return render(request, 'squirrel_tracker/detail.html', context)
-
 
 
 def add_sighting(request):
@@ -160,9 +155,10 @@ def add_sighting(request):
 def show_map(request):
     sightings = Sighting.objects.all()[:100]
     context = {
-        'sightings':sightings
+        'sightings': sightings
     }
-    return render(request,'squirrel_tracker/map.html',context)
+    return render(request, 'squirrel_tracker/map.html', context)
+
 
 def stats(request):
     num_of_sightings = Sighting.objects.all().count()
@@ -181,4 +177,4 @@ def stats(request):
         'running': running,
     }
 
-    return render(request,'squirrel_tracker/stats.html',context)
+    return render(request, 'squirrel_tracker/stats.html', context)

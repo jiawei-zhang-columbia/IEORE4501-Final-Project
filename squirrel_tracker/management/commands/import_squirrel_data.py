@@ -1,7 +1,8 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 import pandas as pd
 from squirrel_tracker.models import Sighting
 from django.db.utils import IntegrityError
+
 
 class Command(BaseCommand):
 
