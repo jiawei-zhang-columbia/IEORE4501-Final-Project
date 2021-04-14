@@ -67,6 +67,7 @@ body{
                 {% endfor %}
             {% endfor %}
         {% endif %}
+        
         <h1>Add a New Squirrel Sighting here!</h1>
         <h3>Please input what you saw here</h3>
         <form action="{% url 'squirrel_tracker:add' %}" method="post">
