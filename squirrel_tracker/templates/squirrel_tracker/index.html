@@ -6,7 +6,10 @@
 
 {% block main %}
     <div class="container">
+        <a href="/">Back to home page </a>
+        <h1>Squirrel List</h1>
         <a href="add/">Add a New Squirrel Sighting</a>
+        
         <ul class="list-group">
             {% for sighting in sightings %}
                 <li class="list-group-item">
@@ -21,3 +24,4 @@
         </ul>
     </div>
 {% endblock %}
+</html>

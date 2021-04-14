@@ -27,6 +27,21 @@ def index(request):
     }
     return render(request, 'squirrel_tracker/index.html', context)
 
+def new_index(request):
+
+    def parse_date(date):
+        date = str(date)
+
+        return date
+
+    sightings = Sighting.objects.all()
+    for i in range(len(sightings)):
+        sightings[i].date = parse_date(sightings[i].date)
+    context = {
+        'sightings': sightings
+    }
+    return render(request, 'squirrel_tracker/new_index.html', context)
+
 
 def detail(request, unique_squirrel_id):
     if request.method == 'POST':

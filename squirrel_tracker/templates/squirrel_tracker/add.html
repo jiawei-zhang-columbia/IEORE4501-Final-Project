@@ -1,8 +1,51 @@
-{% extends 'squirrel_tracker/base.html' %}
+<!doctype html>
+<html>
 
+<head>
+	<meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	</style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+    <body bgcolor="e9e4cd"></body>
+<style>
+    .button {
+      display: inline-block;
+      zoom: 1; 
+      *display: inline;
+      vertical-align: baseline;
+      margin: 0 2px;
+      outline: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      font: 14px/100% Arial, Helvetica, sans-serif;
+      padding: .5em 2em .55em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.3);
+      -webkit-border-radius: .5em; 
+      -moz-border-radius: .5em;
+      border-radius: .5em;
+      -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  }
+  .blue {
+      color: #030303;
+      border: solid 1px #0c7dda;
+      background: #0c7dda;
+      background: -webkit-gradient(linear, left top, left bottom, from(#0c7dda), to(#4e96d1));
+      background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#23cea9', endColorstr='#20edf4');
+  }
+body{
+    padding-top: 20px;
+        padding-left: 10px; padding-right: 10px;
+    }
+</style>
 {% load static %}
-
-{% block title %} - Add Sighting{% endblock %}
 
 {% block main %}
     <div class="container">
@@ -34,7 +77,8 @@
                 {{ field }}
                 <br>
             {% endfor %}
-            <button class="btn btn-outline-secondary" type="submit">Add</button>
+            <button class="button blue" type="submit">Add</button>
+            <a class="button blue" href="/"> Back to home page </a>
         </form>
     </div>
 {% endblock %}
