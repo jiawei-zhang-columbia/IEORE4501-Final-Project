@@ -9,10 +9,11 @@ The website have 5 main functions: allowing the viewers to add squirrels, to upd
 
 
 ## Contributors Infomation
+
 Project Group: Project Group26
+
 Name: [Jiawei Zhang, Hanjing Luo]
+
 UNIs: [jz3278,hl3419]
 
-Tips: 
-
-##
+Tips: Both Thinana and didi in the commit history was made by Hanjing LUO. Due to hardware problem, she did part of the work using Didi's working laptop and the git name cannot be changed according to Didi's company setting.
